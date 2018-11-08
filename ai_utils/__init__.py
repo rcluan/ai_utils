@@ -30,8 +30,9 @@ def preprocess(dataset, reset_index=False, fill_na_columns=[], drop_columns=[], 
 def k_fold(k, x_data, y_data, shuffle=True):
     return StratifiedKFold(n_splits=k, shuffle=shuffle).split(x_data, y_data)
 
-def plot_pred(y_true, y_pred, labels=['x', 'y'], line_width = [1,1]):
-    plt.plot(y, label='True', linewidth=line_width[0])
+def plot_pred(y_true, y_pred, save_to="~/pred.png", labels=['x', 'y'], line_width = [1,1]):
+    
+    plt.plot(y_true, label='True', linewidth=line_width[0])
     plt.plot(y_pred, label='Prediction', linewidth=line_width[1])
         
     # Plot labels etc.
@@ -39,5 +40,5 @@ def plot_pred(y_true, y_pred, labels=['x', 'y'], line_width = [1,1]):
     plt.ylabel(labels[1])
     plt.legend()
     #plt.xticks([i for i in range(0, len(processes), 250)], processes)
-    plt.savefig('pred.png')
+    plt.savefig(save_to)
     plt.show()
