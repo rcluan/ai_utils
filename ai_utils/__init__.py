@@ -21,7 +21,7 @@ def preprocess(dataset, reset_index=False, fill_na_columns=[], drop_columns=[], 
         dataset.reset_index(inplace=True)
 
     for column in fill_na_columns:
-        dataset.fillna(column, inplace=True)
+        dataset[column].fillna(0, inplace=True)
 
     dataset.drop(drop_columns, inplace=True, axis=axis)
 
