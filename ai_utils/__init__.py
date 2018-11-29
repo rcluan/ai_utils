@@ -100,5 +100,5 @@ def send_mail(username, password, smtphost, to, subject, msg_body, attachments=N
         server.sendmail(msg['From'], msg['To'], msg.as_string())
         server.quit()
         print("Successfully sent email to %s:" % (msg['To']))
-    except:
-        print("Error when sending email")
+    except Exception as e:
+        print("Error when sending email %s" % e)
