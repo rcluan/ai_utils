@@ -7,7 +7,7 @@ name = 'metrics'
 # https://www.kaggle.com/c/mercedes-benz-greener-manufacturing/discussion/34019
 def R_squared(y_true, y_pred, to_numpy=False):
     SS_res =  K.sum(K.square(y_true - y_pred))
-    SS_tot = K.sum(K.square(y_true - K.mean(y_true)))
+    SS_tot = K.sum(K.square(y_true - K.mean(tf.constant(y_true))))
 
     R2 = (1 - SS_res/(SS_tot + K.epsilon()))
     return K.get_value(R2) if to_numpy else R2
