@@ -7,7 +7,7 @@ name = 'graphics'
 
 
 def plot_f2_single_graphic(y_pred, y_true, figname=None, figsize=(12, 9), print_fot=False,
-                           x_label='', y_label='', title='', length=2000):
+                           x_label='', y_label='', title='', length=2000, s=1):
     '''
     @param y_pred: numpy array with predict data.
     @param y_true: numpy array with real data.
@@ -18,6 +18,7 @@ def plot_f2_single_graphic(y_pred, y_true, figname=None, figsize=(12, 9), print_
     @param y_label: label to put in y axis.
     @param title: title of the figure.
     @param length: line limits of factor of two metric.
+    @param s: size of points.
     '''
 
     plt.figure(figsize=figsize)
@@ -40,7 +41,7 @@ def plot_f2_single_graphic(y_pred, y_true, figname=None, figsize=(12, 9), print_
     end_x = length * cos(atan(co_angle))
     plt.plot([0, end_x], [0, end_y], '--k')
 
-    plt.scatter(y_pred, y_true, s=1)
+    plt.scatter(y_pred, y_true, s=s)
 
     max_x = y_pred.max()
     max_y = y_true.max()
@@ -60,7 +61,7 @@ def plot_f2_single_graphic(y_pred, y_true, figname=None, figsize=(12, 9), print_
 
 
 def plot_f2_multiple_graphic(to_figure, figname=None, figsize=(12, 9), print_fot=False,
-                             x_label='', y_label='', title='', length=2000):
+                             x_label='', y_label='', title='', length=2000, s=1):
     '''
     @param to_figure: matrix containing data pairs to be compared.
     @param figname: figure name to save.
@@ -70,6 +71,7 @@ def plot_f2_multiple_graphic(to_figure, figname=None, figsize=(12, 9), print_fot
     @param y_label: label to put in y axis.
     @param title: title of the figure.
     @param length: line limits of factor of two metric.
+    @param s: size of points.
     '''
     to_figure = np.array(to_figure)
 
@@ -82,7 +84,7 @@ def plot_f2_multiple_graphic(to_figure, figname=None, figsize=(12, 9), print_fot
             y_one = to_figure[i][j][0]
             y_two = to_figure[i][j][1]
             axes[i, j].set_title(title)
-            axes[i, j].scatter(y_one, y_two, s=0.8)
+            axes[i, j].scatter(y_one, y_two, s=s)
             axes[i, j].set(xlabel=x_label, ylabel=y_label)
 
             co_angle = 1
