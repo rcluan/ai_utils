@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(name='ai_utils',
-      version='1.1.1',
+      version='1.1.2',
       description='Utilities to be used with Tensorflow and Keras for AI techniques',
       url='http://github.com/rcluan/ai_utils',
       author='Luan Campos',
