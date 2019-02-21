@@ -1,20 +1,36 @@
 import tensorflow as tf
 from tensorflow.keras import backend as K
+import numpy as np
 
 name = 'metrics'
 
 # R^2
 # https://www.kaggle.com/c/mercedes-benz-greener-manufacturing/discussion/34019
-def R_squared(y_true, y_pred, to_numpy=False):
-    y_true_mean = K.mean(y_true)
-    y_pred_mean = K.mean(y_pred)
+def R_squared(y_true, y_pred):
     
-    numerator = K.square(K.sum((y_pred-y_pred_mean)*y_true))
-    denominator = K.sum(K.square(y_pred - y_pred_mean))*K.sum(K.square(y_true - y_true_mean))
+    numpy_ = True if(type(y_true).__name__ == 'ndarray') else False
+
+    if(numpy_):
+        y_true_mean = y_true.mean()
+        y_pred_mean = y_pred.mean()
+
+        sum_num = np.sum((y_pred-y_pred_mean)*y_true)
+        numerator = np.square(sum_num)
+
+        denominator = np.sum(np.square(y_pred - y_pred_mean)) \
+            * np.sum(np.square(y_true - y_true_mean))
+    
+    else:
+        y_true_mean = K.mean(y_true)
+        y_pred_mean = K.mean(y_pred)
+
+        numerator = K.square(K.sum((y_pred-y_pred_mean)*y_true))
+        denominator = K.sum(K.square(y_pred - y_pred_mean))*K.sum(K.square(y_true - y_true_mean))
+
     
     R2 = numerator/denominator
     
-    return K.get_value(R2) if to_numpy else R2 
+    return R2
 
 # Factor of two
 # https://link.springer.com/content/pdf/10.1007/s00703-003-0070-7.pdf
@@ -40,16 +56,31 @@ def fac2(y_true, y_pred, to_numpy=False):
 # Pearson r
 # https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.pearsonr.html
 # https://stackoverflow.com/questions/46619869/how-to-specify-the-correlation-coefficient-as-the-loss-function-in-keras
-def pearson_r(y_true, y_pred, to_numpy=False):
-    y_true_mean = K.mean(y_true)
-    y_pred_mean = K.mean(y_pred)
+def pearson_r(y_true, y_pred):
 
-    diff_yt = y_true - y_true_mean
-    diff_yp = y_pred - y_pred_mean
+    numpy_ = True if(type(y_true).__name__ == 'ndarray') else False
 
-    numerator = K.sum((diff_yt) * (diff_yp))
-    denominator = K.sqrt(K.sum(K.square(diff_yt))) * K.sqrt(K.sum(K.square(diff_yp)))
+    if(numpy_):
+        y_true_mean = y_true.mean()
+        y_pred_mean = y_pred.mean()
 
+        diff_yt = y_true - y_true_mean
+        diff_yp = y_pred - y_pred_mean
+
+        numerator = np.sum((diff_yt) * (diff_yp))
+        denominator = np.sqrt(np.sum(np.square(diff_yt))) * np.sqrt(np.sum(np.square(diff_yp)))
+    else:
+
+        y_true_mean = K.mean(y_true)
+        y_pred_mean = K.mean(y_pred)
+
+        diff_yt = y_true - y_true_mean
+        diff_yp = y_pred - y_pred_mean
+
+        numerator = K.sum((diff_yt) * (diff_yp))
+        denominator = K.sqrt(K.sum(K.square(diff_yt))) * K.sqrt(K.sum(K.square(diff_yp)))
+
+    
     r = numerator/denominator
 
-    return K.get_value(r) if to_numpy else r
+    return r
