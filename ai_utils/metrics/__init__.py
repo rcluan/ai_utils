@@ -12,7 +12,7 @@ def R_squared(y_true, y_pred, to_numpy=False):
     numerator = K.square(K.sum((y_pred-y_pred_mean)*y_true))
     denominator = K.sum(K.square(y_pred - y_pred_mean))*K.sum(K.square(y_true - y_true_mean))
     
-    R2 = K.get_value(numerator/denominator)
+    R2 = numerator/denominator
     
     return K.get_value(R2) if to_numpy else R2 
 
