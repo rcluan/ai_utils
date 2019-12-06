@@ -38,7 +38,7 @@ def fac2(y_true, y_pred, to_numpy=False):
     min_ = 0.5
     max_ = 2
 
-    division = tf.divide(y_pred, y_true)
+    division = tf.math.divide_no_nan(y_pred, y_true)
 
     greater_min = tf.greater_equal(division, min_)
     less_max = tf.less_equal(division, max_)
