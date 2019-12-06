@@ -7,8 +7,8 @@ name = 'metrics'
 # R^2
 # https://www.kaggle.com/c/mercedes-benz-greener-manufacturing/discussion/34019
 def R_squared(y_true, y_pred):
-    
-    numpy_ = True if(type(y_true).__name__ == 'ndarray') else False
+
+    numpy_ = type(y_true).__name__ == 'ndarray'
 
     if(numpy_):
         y_true_mean = y_true.mean()
@@ -19,7 +19,7 @@ def R_squared(y_true, y_pred):
 
         denominator = np.sum(np.square(y_pred - y_pred_mean)) \
             * np.sum(np.square(y_true - y_true_mean))
-    
+
     else:
         y_true_mean = K.mean(y_true)
         y_pred_mean = K.mean(y_pred)
@@ -27,9 +27,9 @@ def R_squared(y_true, y_pred):
         numerator = K.square(K.sum((y_pred-y_pred_mean)*y_true))
         denominator = K.sum(K.square(y_pred - y_pred_mean))*K.sum(K.square(y_true - y_true_mean))
 
-    
+
     R2 = numerator/denominator
-    
+
     return R2
 
 # Factor of two
@@ -58,7 +58,7 @@ def fac2(y_true, y_pred, to_numpy=False):
 # https://stackoverflow.com/questions/46619869/how-to-specify-the-correlation-coefficient-as-the-loss-function-in-keras
 def pearson_r(y_true, y_pred):
 
-    numpy_ = True if(type(y_true).__name__ == 'ndarray') else False
+    numpy_ = type(y_true).__name__ == 'ndarray'
 
     if(numpy_):
         y_true_mean = y_true.mean()
@@ -80,7 +80,6 @@ def pearson_r(y_true, y_pred):
         numerator = K.sum((diff_yt) * (diff_yp))
         denominator = K.sqrt(K.sum(K.square(diff_yt))) * K.sqrt(K.sum(K.square(diff_yp)))
 
-    
     r = numerator/denominator
 
     return r
